@@ -8,7 +8,14 @@ root = tk.Tk()
 tk.Label(root, text="A label, outside the grid").pack()
 
 # Create an accessible button grid
-Grid(root,5,5,{}).pack()
+buttons = [ {'text': 'Play'}
+          , {'text': 'Skip Forward'}
+          , {'text': 'Skip Backwards'}
+          , {'text': 'Stop'}
+          , {'text': 'Volume Up'}
+          , {'text': 'Volume Down'} ]
+
+Grid(root, 2, 3, buttons).pack()
 
 # You can still add other widgets
 tk.Label(root, text="Another external label").pack()
