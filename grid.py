@@ -56,7 +56,6 @@ class Grid(tk.Frame):
         for r in range(rows):
             for c in range(cols):
                 index = (r*cols)+c
-                print index
                 button = tk.Button(self, **configs[index])
                 button.grid(row=r, column=c, sticky='nsew')
                 self.buttons[r][c] = button
@@ -80,6 +79,7 @@ class Grid(tk.Frame):
         height = abs(selection[1] - selection[3])
         if width == height == 1:
             # TODO: Invoke the button
+            self.buttons[selection[0]][selection[1]].invoke()
             # Restore full screen split
             self.divide_grid((0,0,self.rows,self.cols))
             return
