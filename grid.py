@@ -100,8 +100,8 @@ class DivideManager(GridManager):
 
     def __init__(self, grid):
         self.grid = grid
-        self.rows = self.grid.rows
-        self.cols = self.grid.cols
+        self.rows = grid.rows
+        self.cols = grid.cols
 
         # Set up selection
         self.divide_grid((0, 0, self.rows, self.cols))
@@ -140,3 +140,31 @@ class DivideManager(GridManager):
         self.grid.configure_buttons(self.selection1, {'bg': 'black'})
         # Split selection 2
         self.divide_grid(self.selection2)
+
+class ScanManager(GridManager):
+    """ Row scanning style button selection """
+    def __init__(self, grid):
+        self.grid = grid
+        self.root = grid.root
+        self.rows = grid.rows
+        self.cols = grid.cols
+        self.current_col = self.cols-1
+
+        # Start the selection loop
+        self.select_next()
+
+    def select_next(self):
+        # Reset current row's color
+        self.grid.configure_buttons((0, self.current_col,self.rows, self.current_col+1), {'bg':'black'})
+        # Advance row number
+        self.current_col = (self.current_col+1) % self.cols
+        # Color current row
+        self.grid.configure_buttons((0, self.current_col,self.rows, self.current_col+1), {'bg':'red'})
+        # Reschedule event
+        self.root.after(1000, self.select_next)
+
+    def typea(self):
+        pass
+
+    def typeb(self):
+        pass
