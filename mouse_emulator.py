@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import Tkinter as tk
-from grid import Grid
+from sinch import Grid
 from Xlib import X, display
 from Xlib.ext.xtest import fake_input
 

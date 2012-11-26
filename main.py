@@ -1,6 +1,6 @@
 #!/usr/bin/python
 import Tkinter as tk
-from grid import Grid
+from sinch import Grid
 
 root = tk.Tk()
 

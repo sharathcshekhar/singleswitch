@@ -5,7 +5,7 @@ import sys
 from pprint import pprint
 from random import choice
 from socket import error as SocketError
-from grid import Grid
+from sinch import Grid
 
 # Settings
 HOST = 'localhost'
