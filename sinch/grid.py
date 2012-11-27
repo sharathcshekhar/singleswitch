@@ -6,6 +6,7 @@ Provides a single-switch accessible grid widget for Tkinter.
 """
 
 import Tkinter as tk
+import settings
 
 class Grid(tk.Frame):
     """ Single-Switch Accessible Button Grid Widget """
@@ -15,7 +16,7 @@ class Grid(tk.Frame):
         tk.Frame.__init__(self, root)
 
         # Bind keypress handler
-        root.bind_all('<Key>', self.keypress)
+        root.bind('<Key>', self.keypress)
 
         # Automatically infer row or column number if omitted
         if rows == None:
@@ -27,6 +28,12 @@ class Grid(tk.Frame):
         self.root = root
         self.rows = rows
         self.cols = cols
+
+        # Make the grid buttons stretch to fill all available space
+        for r in range(rows):
+            self.rowconfigure(r, weight=1)
+        for c in range(cols):
+            self.columnconfigure(c, weight=1)
 
         # Initialize 2d array to hold buttons
         self.buttons = [[None for _ in range(cols)] for _ in range(rows)]
@@ -124,20 +131,20 @@ class DivideManager(GridManager):
         self.selection1, self.selection2 = split(selection)
         # Color selection 1
         self.grid.configure_buttons(self.selection1, 
-                {'bg': 'red', 'fg': 'black'})
+                {'bg': settings.a_color, 'fg': 'black'})
         # Color selection 2
         self.grid.configure_buttons(self.selection2, 
-                {'bg': 'blue', 'fg':'black'})
+                {'bg': settings.b_color, 'fg': 'black'})
 
     def typea(self):
         # Disable selection 2
-        self.grid.configure_buttons(self.selection2, {'bg': 'black'})
+        self.grid.configure_buttons(self.selection2, {'bg': settings.disabled_color})
         # Split selection 1
         self.divide_grid(self.selection1)
 
     def typeb(self):
         # Disable selection 1
-        self.grid.configure_buttons(self.selection1, {'bg': 'black'})
+        self.grid.configure_buttons(self.selection1, {'bg': settings.disabled_color})
         # Split selection 2
         self.divide_grid(self.selection2)
 
@@ -155,11 +162,11 @@ class ScanManager(GridManager):
 
     def select_next(self):
         # Reset current row's color
-        self.grid.configure_buttons((0, self.current_col,self.rows, self.current_col+1), {'bg':'black'})
+        self.grid.configure_buttons((0, self.current_col,self.rows, self.current_col+1), {'bg':settings.disabled_color})
         # Advance row number
         self.current_col = (self.current_col+1) % self.cols
         # Color current row
-        self.grid.configure_buttons((0, self.current_col,self.rows, self.current_col+1), {'bg':'red'})
+        self.grid.configure_buttons((0, self.current_col,self.rows, self.current_col+1), {'bg':settings.a_color})
         # Reschedule event
         self.root.after(1000, self.select_next)
 

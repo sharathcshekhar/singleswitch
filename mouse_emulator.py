@@ -1,8 +1,8 @@
 #!/usr/bin/python
 import Tkinter as tk
-from sinch import Grid
 from Xlib import X, display
 from Xlib.ext.xtest import fake_input
+import sinch
 
 d = display.Display()
 screen = d.screen()
@@ -38,11 +38,11 @@ def click(button):
     press(button)
     release(button)
 
-root = tk.Tk()
+root = sinch.new_window()
 root.title("Sinch Mouse Emulator")
 
 # Add a tkinter widget
-tk.Label(root, text="Select a mouse action").pack()
+tk.Label(root, text="Select a mouse action").pack(expand=1, fill='both')
 
 # Create an accessible button grid
 buttons = [ {'text': 'Move Up',      'command': lambda:setvelocity(0,-speed) }
@@ -54,8 +54,8 @@ buttons = [ {'text': 'Move Up',      'command': lambda:setvelocity(0,-speed) }
           , {'text': 'Double click', 'command': lambda:click(1)              } # TODO fix
           , {'text': 'Drag',         'command': lambda:press(1)              } ]
 
-controls = Grid(root, 2, 4, buttons)
-controls.pack()
+controls = sinch.Grid(root, 2, 4, buttons)
+controls.pack(expand=1, fill='both')
 
 root.after(10, move_pointer)
 root.mainloop()

@@ -5,7 +5,7 @@ import sys
 from pprint import pprint
 from random import choice
 from socket import error as SocketError
-from sinch import Grid
+import sinch
 
 # Settings
 HOST = 'localhost'
@@ -44,9 +44,9 @@ def play():
     else:
         client.play()
 
-root = tk.Tk()
+root = sinch.new_window()
 
-tk.Label(root, text="A label, outside the grid").pack()
+tk.Label(root, text="A label, outside the grid").pack(expand=1, fill='both')
 
 # Create an accessible button grid
 buttons = [ {'text': 'Play',           'command': play }
@@ -56,7 +56,8 @@ buttons = [ {'text': 'Play',           'command': play }
           , {'text': 'Volume Up',      'command': client.play }
           , {'text': 'Volume Down',    'command': client.play } ]
 
-Grid(root, 2, 3, buttons).pack()
+grid = sinch.Grid(root, 2, 3, buttons)
+grid.pack(expand=1, fill='both')
 
 # Closing the window also closes connection to mpd
 def close():
