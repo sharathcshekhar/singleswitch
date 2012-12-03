@@ -66,7 +66,7 @@ class Grid(tk.Frame):
         if x == "b":
             self.manager.typeb()
 
-        elif x == "a":
+        elif x == "r":
             self.manager.typea()
 
 class GridManager(object):

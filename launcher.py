@@ -4,6 +4,7 @@ import sinch
 import os
 
 root = sinch.new_window()
+root.title("Sinch Launcher")
 
 # Add a tkinter widget
 tk.Label(root, text="A label, outside the grid").pack(expand=1, fill='both')

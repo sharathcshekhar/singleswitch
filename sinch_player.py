@@ -24,18 +24,12 @@ client.random(0)
 # Repeat the playlist
 client.repeat(1)
 
-pprint(client.status())
-pprint(client.stats())
-#pprint(client.idle('player'))
-
 # Check database for any updates
 client.update()
 # Clear current playlist
 client.clear()
 # Add entire database to playlist
 client.add("/")
-
-pprint(client.playlistinfo())
 
 def play():
     status = client.status()
@@ -44,7 +38,14 @@ def play():
     else:
         client.play()
 
+def change_vol(delta):
+    global volume
+    volume += delta;
+    print volume
+    client.setvol(volume)
+
 root = sinch.new_window()
+root.title("Sinch Music Player")
 
 tk.Label(root, text="A label, outside the grid").pack(expand=1, fill='both')
 
@@ -53,8 +54,8 @@ buttons = [ {'text': 'Play',           'command': play }
           , {'text': 'Next',           'command': client.next }
           , {'text': 'Previous',       'command': client.previous }
           , {'text': 'Stop',           'command': client.stop }
-          , {'text': 'Volume Up',      'command': client.play }
-          , {'text': 'Volume Down',    'command': client.play } ]
+          , {'text': 'Volume Up',      'command': lambda:change_vol(10)}
+          , {'text': 'Volume Down',    'command': lambda:change_vol(-10) } ]
 
 grid = sinch.Grid(root, 2, 3, buttons)
 grid.pack(expand=1, fill='both')
